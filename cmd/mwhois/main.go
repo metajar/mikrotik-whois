@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/metajar/mikrotik-whois/internal/api"
 	"github.com/metajar/mikrotik-whois/internal/config"
+	"log"
 )
 
 func main() {
@@ -21,10 +22,14 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	if *ipPtr == "" {
+		log.Fatal("need an ip with --ip")
+	}
 	a, err := M.GetDHCPHost(*ipPtr)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
-	fmt.Println(a)
+	a.Render()
 
 }
